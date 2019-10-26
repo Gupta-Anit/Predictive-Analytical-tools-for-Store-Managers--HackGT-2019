@@ -13,7 +13,8 @@ function generateRelatedItemData(query) {
 
     xhr.onload = function () {
         var relatedItems = JSON.parse(this.responseText);
-        generateGraph(relatedItems);
+        document.getElementById("my_dataviz").innerHTML = "";
+        generateGraph(getInputData(relatedItems));
     }
 
     xhr.send()
@@ -32,8 +33,33 @@ var buildQuery = function (data) {
 };
 
 
-function generateGraph(relatedItems){
-    for(var key in relatedItems){
-        console.log(key);
-    }
+function getInputData(relatedItems) {
+    // var data = {"JUMBO BAG PINK POLKADOT":45.68,"JUMBO BAG RED RETROSPOT":59.88,"JUMBO BAG SCANDINAVIAN BLUE PAISLEY":39.88,"JUMBO SHOPPER VINTAGE RED PAISLEY":49.2,"JUMBO STORAGE BAG SUKI":43.8}
+    // var data = { "children": [{ "name": "A", "value": 5 }, { "name": "B", "value": 10 }, { "name": "C", "value": 15 }] }
+
+    var children = [];
+    for (var key in relatedItems) {
+        children.push({
+            'name': key,
+            'value': relatedItems[key],
+            'size': relatedItems[key] * 100000
+        });
+    };
+
+    return [{
+        'name': "Related Items",
+        'children': children
+    }];
+}
+
+function generateGraph(data) {
+    // create a chart and set the data
+    chart = anychart.treeMap(data, "as-tree");
+
+    // set the container id
+    chart.container("my_dataviz");
+    chart.sort("desc");
+
+    // initiate drawing the chart
+    chart.draw();
 }

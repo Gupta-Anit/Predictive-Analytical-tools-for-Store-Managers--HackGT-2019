@@ -23,7 +23,6 @@ app.get('/', (req, res) => {
         var intializer = {
             'items': masterItemList
         };
-        console.log(masterItemList);
 
         res.render('home', { data: intializer });
     });
@@ -35,7 +34,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getItem', (req, res) => {
-    console.log(req.query.itemName);
 
     let options = {
         args: [req.query.itemName]
@@ -45,7 +43,6 @@ app.get('/getItem', (req, res) => {
         if (err){
             res.send(err);
         }
-        console.log(data.toString());
         var result = createJSONObject(data);
         res.send(result);
     });   
