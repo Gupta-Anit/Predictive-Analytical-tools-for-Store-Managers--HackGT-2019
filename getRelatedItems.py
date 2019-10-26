@@ -3,6 +3,7 @@ import collections
 import sys
 
 dfassoc = pd.read_excel('assoc_rules.xlsx')
+
 def other_frequently_bought_item(item):
     d = collections.defaultdict(list)
     count=(dfassoc.loc[dfassoc['antecedents'] == item, 'consequents']).count()
@@ -21,6 +22,6 @@ def other_frequently_bought_item(item):
         avgDict[ante] = round((sum(conf)/ float(len(conf))),2)
     print(avgDict)
 
-# other_frequently_bought_item("JUMBO BAG PINK VINTAGE PAISLEY")
+# other_frequently_bought_item("JUMBO BAG PINK POLKADOT")
 other_frequently_bought_item(sys.argv[1])
 
