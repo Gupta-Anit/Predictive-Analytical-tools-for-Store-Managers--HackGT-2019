@@ -1,0 +1,105 @@
+<!-- Code from d3-graph-gallery.com -->
+<!DOCTYPE html>
+<meta charset="utf-8">
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<!-- Color scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+
+<!-- Add 2 buttons -->
+<button onclick="update(data1)">Data 1</button>
+<button onclick="update(data2)">Data 2</button>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+
+<script>
+
+// create 2 data_set
+// Dictionary in format item: count
+var data1 = {"Lamp": 9, "Chair": 20, "Bookshelf":30, "Book":8, "Whisk":12}
+var data2 = {"Lamp": 10, "Chair": 10, "Bookshelf":20, "Book":16, "Whisk":15}
+
+// A function that create / update the plot for a given variable:
+function update(data) {
+
+  document.getElementById("my_dataviz").innerHTML = "";
+
+  // set the dimensions and margins of the graph
+  var width = 450
+      height = 450
+      margin = 40
+
+  // The radius of the pieplot is half the width or half the height (smallest one). I subtract a bit of margin.
+  var radius = Math.min(width, height) / 2 - margin
+
+  // append the svg object to the div called 'my_dataviz'
+  var svg = d3.select("#my_dataviz")
+    .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+    .append("g")
+      .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+
+  // set the color scale
+  var color = d3.scaleOrdinal()
+    .domain(Object.keys(data))
+    .range(d3.schemeDark2);
+
+  // Compute the position of each group on the pie:
+  var pie = d3.pie()
+    .value(function(d) {return d.value; })
+    .sort(function(a, b) { console.log(a) ; return d3.ascending(a.key, b.key);} ) // This make sure that group order remains the same in the pie chart
+  var data_ready = pie(d3.entries(data))
+
+  // map to data
+  var u = svg.selectAll("path")
+    .data(data_ready)
+
+  // shape helper to build arcs:
+  var arcGenerator = d3.arc()
+    .innerRadius(0)
+    .outerRadius(radius)
+
+  // Build the pie chart: Basically, each part of the pie is a path that we build using the arc function.
+  u
+    .enter()
+    .append('path')
+      .merge(u)
+      .transition()
+      .duration(1000)
+      .attr('d', arcGenerator)
+      .attr('fill', function(d){ return(color(d.data.key)) })
+      .attr("stroke", "white")
+      .style("stroke-width", "2px")
+      .style("opacity", 1)
+
+  // Now add the annotation. Use the centroid method to get the best coordinates
+  u
+    .enter()
+    .append('text')
+      .text(function(d){ return d.data.key})
+      .transition()
+      .styleTween('transform', function (d) {
+        var startTranslateState = 'translate(0px,0px)';
+        var endTranslateState = "translate(" + arcGenerator.centroid(d)[0] + "px," + arcGenerator.centroid(d)[1] + "px" + ")";
+        console.log(startTranslateState, endTranslateState)
+        return d3.interpolateString(startTranslateState, endTranslateState);
+      })
+      .duration(1000)
+      .style("text-anchor", "middle")
+      .style("font-size", 17)
+
+  // remove the group that is not present anymore
+  u
+    .exit()
+    .remove()
+
+}
+
+// Initialize the plot with the first dataset
+update(data1)
+
+</script>
