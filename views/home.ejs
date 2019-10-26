@@ -36,10 +36,17 @@
                 <div class="inner">
 
                     <h3 class="major">Select Item</h3>
-                    <select name="" id="">
-                        <option value="">Apple</option>
-                        <option value="">Orange</option>
+                    <select name="itemName" id="itemList">
+                        <!-- <option value="" selected="selected" disabled>Select an Item</option> -->
+                        <% data['items'].forEach(item => { %>
+                        <option value="<%= item %>"><%= item %></option>
+                        <% }) %>
                     </select>
+
+                    <input type="submit" value="Get Related Items" class="button primary"
+                        style="margin: auto; margin-top: 20px;" id="fetchBtn">
+
+                    
 
                     <div id="data-view">
                         <div class='tableauPlaceholder' id='viz1572100311848' style='position: relative'>
@@ -114,6 +121,8 @@
     </div>
 
     <% include partials/scripts.ejs %>
+
+
 
 </body>
 
