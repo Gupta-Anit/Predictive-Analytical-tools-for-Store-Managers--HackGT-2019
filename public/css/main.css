@@ -319,7 +319,7 @@ input, select, textarea {
 	}
 
 	.tableu{
-		margin: 10px;
+		margin: 0 -120px;
 		box-shadow: 0 0 17px 3px rgba(184,184,184,.5);
 	}
 
