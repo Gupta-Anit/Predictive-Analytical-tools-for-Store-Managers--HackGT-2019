@@ -82,7 +82,13 @@
                         document.getElementById('btnInventory').addEventListener('click', function () {
                             var dropDown = document.getElementById('itemList');
                             var selectedItem = dropDown.options[dropDown.selectedIndex].value;
-                            document.getElementById('quantity').textContent = getPredictedQuantity(selectedItem);
+
+                            var quantity = document.getElementById('quantity');
+                            quantity.textContent = 'Retrieving';
+
+                            setTimeout(function(){
+                                quantity.textContent = getPredictedQuantity(selectedItem);
+                            }, Math.random() * 2000);                            
                         });
                     </script>
 

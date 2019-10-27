@@ -85,7 +85,7 @@ function getPredictedQuantity(itemName) {
         'JAM MAKING SET WITH JARS': 0
     };
 
-    return testData[itemName];    
+    return testData[itemName];        
 }
 
 function generateGraph(data) {
