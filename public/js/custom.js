@@ -34,8 +34,6 @@ var buildQuery = function (data) {
 
 
 function getInputData(relatedItems) {
-    // var data = {"JUMBO BAG PINK POLKADOT":45.68,"JUMBO BAG RED RETROSPOT":59.88,"JUMBO BAG SCANDINAVIAN BLUE PAISLEY":39.88,"JUMBO SHOPPER VINTAGE RED PAISLEY":49.2,"JUMBO STORAGE BAG SUKI":43.8}
-    // var data = { "children": [{ "name": "A", "value": 5 }, { "name": "B", "value": 10 }, { "name": "C", "value": 15 }] }
 
     var children = [];
     for (var key in relatedItems) {
@@ -47,7 +45,7 @@ function getInputData(relatedItems) {
     };
 
     return [{
-        'name': "Related Items",
+        'name': "Tree Map of Related Items",
         'children': children
     }];
 }
@@ -59,6 +57,18 @@ function generateGraph(data) {
     // set the container id
     chart.container("my_dataviz");
     chart.sort("desc");
+
+    //Color
+    var customColorScale = anychart.scales.linearColor();
+    customColorScale.colors(["#b4f0ad", "#54B948"]);
+
+    // set the color scale as the color scale of the chart
+    chart.colorScale(customColorScale);
+
+
+    chart.tooltip().format(
+        "Frequently bought item: {%value}%"
+    );
 
     // initiate drawing the chart
     chart.draw();

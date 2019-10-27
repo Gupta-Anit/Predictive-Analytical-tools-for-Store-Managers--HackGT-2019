@@ -18,8 +18,8 @@ app.get('/', (req, res) => {
         if (err) {
             res.send(err);
         }
-        masterItemList = createJSONObject(data.toString())['items'];
-
+        masterItemList = createJSONObject(data)['items'];
+        
         var intializer = {
             'items': masterItemList
         };
