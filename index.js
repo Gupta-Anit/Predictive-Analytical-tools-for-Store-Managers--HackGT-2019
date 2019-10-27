@@ -1,3 +1,5 @@
+// 'use strict';
+
 var express = require('express'),
     { PythonShell } = require('python-shell');
 
@@ -5,7 +7,8 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
     console.log('Starting the connection to the server');
 });
 
@@ -72,3 +75,5 @@ function runPythonScript(script, arguments){
 function createJSONObject(data) {
     return JSON.parse(data.toString().replace(/\'/g, '"'));
 }
+
+module.exports = app;
