@@ -1,3 +1,5 @@
+// 'use strict';
+
 var express = require('express'),
     { PythonShell } = require('python-shell');
 
@@ -5,7 +7,8 @@ var app = express();
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 
-app.listen(3000, () => {
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
     console.log('Starting the connection to the server');
 });
 
@@ -18,12 +21,11 @@ app.get('/', (req, res) => {
         if (err) {
             res.send(err);
         }
-        masterItemList = createJSONObject(data.toString())['items'];
-
+        masterItemList = createJSONObject(data)['items'];
+        
         var intializer = {
             'items': masterItemList
         };
-        console.log(masterItemList);
 
         res.render('home', { data: intializer });
     });
@@ -35,7 +37,6 @@ app.get('/', (req, res) => {
 });
 
 app.get('/getItem', (req, res) => {
-    console.log(req.query.itemName);
 
     let options = {
         args: [req.query.itemName]
@@ -45,7 +46,6 @@ app.get('/getItem', (req, res) => {
         if (err){
             res.send(err);
         }
-        console.log(data.toString());
         var result = createJSONObject(data);
         res.send(result);
     });   
@@ -75,3 +75,5 @@ function runPythonScript(script, arguments){
 function createJSONObject(data) {
     return JSON.parse(data.toString().replace(/\'/g, '"'));
 }
+
+module.exports = app;

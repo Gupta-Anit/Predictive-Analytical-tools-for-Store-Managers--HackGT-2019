@@ -13,7 +13,8 @@ function generateRelatedItemData(query) {
 
     xhr.onload = function () {
         var relatedItems = JSON.parse(this.responseText);
-        generateGraph(relatedItems);
+        document.getElementById("my_dataviz").innerHTML = "";
+        generateGraph(getInputData(relatedItems));
     }
 
     xhr.send()
@@ -32,8 +33,43 @@ var buildQuery = function (data) {
 };
 
 
-function generateGraph(relatedItems){
-    for(var key in relatedItems){
-        console.log(key);
-    }
+function getInputData(relatedItems) {
+
+    var children = [];
+    for (var key in relatedItems) {
+        children.push({
+            'name': key,
+            'value': relatedItems[key],
+            'size': relatedItems[key] * 100000
+        });
+    };
+
+    return [{
+        'name': "Tree Map of Related Items",
+        'children': children
+    }];
+}
+
+function generateGraph(data) {
+    // create a chart and set the data
+    chart = anychart.treeMap(data, "as-tree");
+
+    // set the container id
+    chart.container("my_dataviz");
+    chart.sort("desc");
+
+    //Color
+    var customColorScale = anychart.scales.linearColor();
+    customColorScale.colors(["#b4f0ad", "#54B948"]);
+
+    // set the color scale as the color scale of the chart
+    chart.colorScale(customColorScale);
+
+
+    chart.tooltip().format(
+        "Frequently bought item: {%value}%"
+    );
+
+    // initiate drawing the chart
+    chart.draw();
 }

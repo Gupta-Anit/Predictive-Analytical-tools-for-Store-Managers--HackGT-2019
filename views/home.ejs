@@ -13,6 +13,15 @@
     <link rel="stylesheet" href="/css/main.css" />
     <noscript>
         <link rel="stylesheet" href="/css/noscript.css" /></noscript>
+
+    <style>
+        #my_dataviz{
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 
 <body class="is-preload">
@@ -26,8 +35,8 @@
         <section id="wrapper">
             <header>
                 <div class="inner">
-                    <h2>Multiplying Lightbulb</h2>
-                    <p>Inventory Dashboard</p>
+                    <h2>Lightbulb Companion</h2>
+                    <p>Smart Analytics for NCR Silver</p>
                 </div>
             </header>
 
@@ -35,21 +44,26 @@
             <div class="wrapper">
                 <div class="inner">
 
-                    <h3 class="major">Select Item</h3>
+                    <h3 class="major">Frequently Together Bought Items </h3>
                     <select name="itemName" id="itemList">
-                        <!-- <option value="" selected="selected" disabled>Select an Item</option> -->
+                        <option value="" selected="selected" disabled>Select an Item</option>
                         <% data['items'].forEach(item => { %>
                         <option value="<%= item %>"><%= item %></option>
                         <% }) %>
                     </select>
 
-                    <input type="submit" value="Get Related Items" class="button primary"
+                    <input type="submit" value="Get Items" class="button primary"
                         style="margin: auto; margin-top: 20px;" id="fetchBtn">
 
-                    
 
-                    <div id="data-view">
-                        <div class='tableauPlaceholder' id='viz1572100311848' style='position: relative'>
+                    <div id="my_dataviz">
+                        
+                    </div>
+
+                    <br><br>
+                    <h3 class="major">Demand Forecast</h3>
+                    <div class="tableu">
+                        <div class='tableauPlaceholder' id='viz1572100311848' style='position: relative; margin: auto;'>
                             <noscript><a href='#'><img alt=' '
                                         src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;co&#47;countcustomer&#47;Dashboard1&#47;1_rss.png'
                                         style='border: none' /></a></noscript>
@@ -89,27 +103,7 @@
                         </script>
                     </div>
 
-                    <h3 class="major">Vitae phasellus</h3>
-                    <p>Cras mattis ante fermentum, malesuada neque vitae, eleifend erat. Phasellus non pulvinar erat.
-                        Fusce tincidunt, nisl eget mattis egestas, purus ipsum consequat orci, sit amet lobortis lorem
-                        lacus in tellus. Sed ac elementum arcu. Quisque placerat auctor laoreet.</p>
-
-                    <section class="features">
-                        <article>
-                            <a href="#" class="image"><img src="images/pic04.jpg" alt="" /></a>
-                            <h3 class="major">Sed feugiat lorem</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-                                ultrices.</p>
-                            <a href="#" class="special">Learn more</a>
-                        </article>
-                        <article>
-                            <a href="#" class="image"><img src="images/pic05.jpg" alt="" /></a>
-                            <h3 class="major">Nisl placerat</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing vehicula id nulla dignissim dapibus
-                                ultrices.</p>
-                            <a href="#" class="special">Learn more</a>
-                        </article>
-                    </section>
+                    
 
                 </div>
             </div>
